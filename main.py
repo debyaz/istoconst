@@ -3,14 +3,14 @@ import string
 import numpy as np
 
 f = open('coordinates.txt', 'w')
-def calculate_coordinates(contmatrix):
+def calculate_coordinates(contmatrix, layer:float):
     f.write('\n----------------------frame----------------------------\n')
     for i in range(0,len(contmatrix[:][:])):
         for k in range(0,len(contmatrix[i][:])):
             t = contmatrix[i][k]
             x = t[0][0]
             y = t[0][1]
-            line = '('+str(x)+','+str(y)+',0),'
+            line = '('+str(x)+','+str(y)+', '+ str(layer)+'),'
             
             f.write(line)
             #print('(',x,',',y,',',0,'),')
@@ -22,7 +22,7 @@ directory:string = 'Series-80341/'
 file:string = directory + str(num) + '.jpg'
 image = cv.imread(file)
 #cv.imshow('MRI',image)
-
+offsetValue:float = 0.5
 for y in range(0,1):
     num = 1
     for x in range(0,90):
@@ -37,8 +37,9 @@ for y in range(0,1):
         #cv.imshow('contour',gray)
         #cv.imshow('vergin',blank)
         #cv.imshow('MRI',thresh)
-        calculate_coordinates(contours)
+        calculate_coordinates(contours,num*offsetValue)
         num += 1
+        
         
 
 
